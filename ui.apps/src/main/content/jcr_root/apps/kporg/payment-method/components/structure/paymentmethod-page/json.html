@@ -1,0 +1,11 @@
+<sly data-sly-use.angHandler="org.kp.web.coveragecosts.models.AngularTemplateHandlerUse">
+{
+	"pagename": "${currentPage.name}",
+	"comps": [
+	<sly data-sly-list="${angHandler.AngularComps}">
+    	<sly data-sly-resource="${item.TemplatePath @ selectors='json'}"></sly>
+    	<sly data-sly-test="${!itemList.last}">,</sly>
+    </sly> 
+    ]
+}
+</sly>

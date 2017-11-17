@@ -1,0 +1,11 @@
+<sly data-sly-use.pojoUtil="org.kp.foundation.core.utils.WCMPojoUtil">
+	<sly data-sly-test="${pojoUtil.isAuthoring}">
+		<sly data-sly-include="template-author.html"></sly>
+	</sly>
+	<sly data-sly-test="${!pojoUtil.isAuthoring}">
+		<pm-payment-method *ngIf="(initialModel$ | async)?.ready === true"
+			[model]="(initialModel$ | async)?.paymentTypeVO"
+			[modelOptions]="(initialModel$ | async)?.paymentTypeVOOptions"
+			[modelPaymentMethodList]="(initialModel$ | async)?.paymentMethodList"></pm-payment-method>
+	</sly> 
+</sly>

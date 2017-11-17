@@ -1,0 +1,127 @@
+<sly data-sly-use.ae="org.kp.web.paymentmethod.use.AccountEditViewUse" data-sly-use.pojoUtil="org.kp.foundation.core.utils.WCMPojoUtil" >
+        <div data-sly-test.author="${wcmmode.edit || wcmmode.design}">Edit Payment Method - Edit Account Component</div>
+	     <div *ngIf="(appState$ | async)?.paymentType.type === 'CC'">
+	     	 <h1>${ae.EditModalText}</h1>
+	     	 
+	         <div class="pm-name-column-container">
+	             <div class="pm-payment-method-first-name-column">
+	                 <label class="styling-8 --book --caps">${ae.NameOnCardLabel}</label>
+	             </div>
+	             <div class="pm-payment-method-credit-card-first-column">
+	                 <label class="styling-8 --book --caps">${ae.CardNumberLabel}</label>
+	             </div>
+	         </div>
+	         
+	         <div class="pm-name-column-container">
+	             <div class="pm-payment-method-first-name-column">
+	                 <div  class="styling-8 --book --caps">Elena Martinez</div>
+	             </div>
+	             <div class="pm-payment-method-credit-card-first-column">
+	                 <div  class="styling-8 --book --caps">VISA **** 5678</div>
+	             </div>
+	         </div>
+	         	
+	         <div class="pm-name-column-container">
+	             <div class="pm-payment-method-credit-card-first-column">
+	                 <label for="check-exp-month" class="styling-8 --book --caps">${ae.ExpirationDateLabel}&nbsp;</label>
+				</div>
+				<div class="pm-payment-method-credit-card-third-column">
+	                 <label for="check-account-nickname" class="styling-8 --book --caps">${ae.PaymentMethodNickNameLabel}</label>
+				</div>
+			</div>
+			<div class="pm-name-column-container">
+	            <div class="select-dropdown">
+	                <div>
+	                	<i class="icon-chevron-down"></i>
+	                </div>
+	                <select id="check-exp-month" class="select-menu" pqe="expiration-month-dropdown" aria-label="expiration-month" [(ngModel)]="model.month" (ngModelChange)="valueChange($event)">
+						<option value="0">${ae.MonthLabel}</option>
+	                    <option value="1">01 January</option>
+	                    <option value="2">02 February</option>
+	                    <option value="3">03 March</option>
+	                    <option value="4">04 April</option>
+	                    <option value="5">05 May</option>
+	              		<option value="6">06 June</option>
+	      				<option value="7">07 July</option>
+	       				<option value="8">08 August</option>
+	         			<option value="9">09 September</option>
+	            		<option value="10">10 October</option>
+	            		<option value="11">11 November</option>
+	        			<option value="12">12 December</option>
+	                </select>
+	            </div>
+                <label for="check-exp-year" class="styling-8 --book --caps">&nbsp;</label>
+                <div class="select-dropdown">	
+              	    <div>
+                   		<i class="icon-chevron-down"></i>
+                   </div>
+					<select id="check-exp-year" data-sly-test="${pojoUtil.isAuthoring}" pqe="expiration-year-dropdown" class="select-menu" aria-label="expiration-year" >
+	              		<option value="0">${ae.YearLabel}</option>
+	              		<option *ngFor="let c of yearOptions" [ngValue]="c">{{c}}</option>
+	           		</select>
+           			<select id="check-exp-year" data-sly-test="${!pojoUtil.isAuthoring}" pqe="expiration-year-dropdown" class="select-menu" aria-label="expiration-year" [(ngModel)]="model.year" (ngModelChange)="valueChange($event)">
+             			<option value="0">${ae.YearLabel}</option>
+             			<option *ngFor="let c of yearOptions" [ngValue]="c">{{c}}</option>
+                   </select>
+                </div>
+               	<input id="check-account-nickname" pqe="nickname-textfield" [ngClass]="(!model.saveMethod) ? 'disabled-field':''" [disabled]="!model.saveMethod" #accountNickname
+	            	[attr.type]="'text'" [(ngModel)]="model.accountNickname" [style.width]="'250px'" />               	            			
+			</div>
+		
+			<div class="pm-name-column-container">
+	             <div class="pm-payment-method-default-payment-checkbox-column">
+	                 <input class="form-control" type="checkbox" id="checkbox_2" />
+	                 <label for="checkbox_2">${ae.DefaultPaymentMethodLabel}</label>
+	             </div>
+	        </div>
+	     </div>
+	     
+	     <div *ngIf="(appState$ | async)?.paymentType.type === 'CC'">
+	     	 <h1>${ae.ACHModalText}</h1>
+	         <div class="pm-name-column-container">
+	             <div class="pm-payment-method-first-name-column">
+	              	<label class="styling-8 --book --caps">${ae.NameOnCardLabel}</label>
+	             </div>
+	             <div class="pm-payment-method-credit-card-first-column">
+	                 <label class="styling-8 --book --caps">${ae.ModalAcctNumberLabel}</label>
+	             </div>
+	         </div>
+
+	         <div class="pm-name-column-container">
+	             <div class="pm-payment-method-first-name-column">
+	                 <div  class="styling-8 --book --caps">Elena Martinez</div>
+	             </div>
+	             <div class="pm-payment-method-credit-card-first-column">
+	                 <div  class="styling-8 --book --caps">CHECKING **** 1230</div>
+	             </div>
+	         </div>
+	         	
+	         <div class="pm-name-column-container">
+				<div class="pm-payment-method-credit-card-first-column">
+	                 <label for="check-account-nickname" class="styling-8 --book --caps">${ae.PaymentMethodNickNameLabel}</label>
+				</div>
+			</div>
+			
+			<div class="pm-name-column-container">
+               	<input id="check-account-nickname" pqe="nickname-textfield" [ngClass]="(!model.saveMethod) ? 'disabled-field':''" [disabled]="!model.saveMethod" #accountNickname
+	            	[attr.type]="'text'" [(ngModel)]="model.accountNickname" [style.width]="'250px'" />               	            			
+			</div>
+			
+			<div class="pm-name-column-container">
+	             <div class="pm-payment-method-default-payment-checkbox-column">
+	                 <input class="form-control" type="checkbox" id="checkbox_2" />
+	                 <label for="checkbox_2">${ae.DefaultPaymentMethodLabel}</label>
+	             </div>
+	        </div>
+	        
+			<div class="pm-name-column-container">
+				<div class="pm-payment-method-credit-cardtype-text">
+	             	<p class="styling-6 --book --dolphin">${ae.SavingsAcctDisMsg}</p>
+	         	</div>
+			</div>
+	     </div>
+        <div class="pm-payment-method-buttons-column">
+        	<button class="button" data-sly-attribute.id="btn_cancel" data-sly-attribute.data-target="" data-sly-attribute.data-url="" data-sly-attribute.data-analytics-click="" data-analytics-type="button" id="btn_cancel">${ae.ButtonCancelLabel}</button> 
+       		<button class="button" data-sly-attribute.id="btn_Next" data-sly-attribute.data-target="" data-sly-attribute.data-url="" data-sly-attribute.data-analytics-click="" data-analytics-type="button" id="btn_Next">${ae.ButtonNextLabel}</button>
+       	</div>
+    </sly>

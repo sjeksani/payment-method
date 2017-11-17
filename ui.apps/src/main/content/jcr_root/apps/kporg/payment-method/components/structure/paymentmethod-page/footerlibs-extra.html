@@ -1,0 +1,21 @@
+<!--/*
+  Copyright 2016 Kaiser Permanente
+  All Rights Reserved.
+
+  NOTICE:  All information contained herein is, and remains
+  the property of Kaiser Permanente and its suppliers, if any.
+  The intellectual and technical concepts contained
+  herein are proprietary to Kaiser Permanente and its
+  suppliers and are protected by trade secret or copyright law.
+  Dissemination of this information or reproduction of this material
+  is strictly forbidden unless prior written permission is obtained
+  from Kaiser Permanente.
+  
+  This script will be empty, but it exists in case there are additive client-side includes
+  or initialization logic in other templates, thus, this empty script can be overridden
+  without having to duplicate the logic in "footlibs.html". 
+*/-->
+
+<!--/* Include the site client libraries (loading only the JS in the footer, CSS was loaded in the header) */-->
+<sly data-sly-use.clientLib="/libs/granite/sightly/templates/clientlib.html" data-sly-call="${clientLib.js @ categories='payment-method.all'}" data-sly-unwrap/></sly>
+

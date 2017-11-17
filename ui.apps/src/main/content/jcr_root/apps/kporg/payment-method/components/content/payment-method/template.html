@@ -1,0 +1,90 @@
+<div data-sly-use.pmt="org.kp.web.paymentmethod.use.PaymentMethodUse" data-sly-use.pojoUtil="org.kp.foundation.core.utils.WCMPojoUtil" >
+	 <div data-sly-test.author="${wcmmode.edit || wcmmode.design}">Edit the Payment Method Component</div>			
+     <div>
+         <div class="pm-payment-method-column">
+             <div class="">
+                 <p>${pmt.Title @ context='html'}</p>                      
+                 <div pqe="amount-due">${pmt.SubTitle @ context='html'}</div>
+             </div>
+
+             <!-- Payment Method list -->
+             <!--<div class="pm-row" data-analytics-location="payment method list" *ngIf="((noHistoryInSelection$ | async)) === false && ((noHistory$ | async)) === false && ((paymentHistoryError$ | async)) === false">-->
+             <div data-analytics-location="payment method list">
+                 <div id="table-cage">
+                     <table aria-readonly="true" class="data-table" role="grid">
+                         <tbody id="container">
+             
+                                    <tr *ngFor="let item of modelPaymentMethodList.card">
+                                        <td><input type="radio" id="a" name="chkPayment" [value]="item.paymentToken" [checked]="(item.paymentToken == defaultToken)" /></td>
+                                            <td id="a" attr.aria-label="{{item.nickName}}" *ngIf="item.nickName"> {{item.nickName}}
+                                                <br>
+                                                <span class="styling-6 --medium --dolphin" *ngIf="(item.paymentToken == defaultToken)"> Default payment method</span>
+                                            </td>
+                                        <td attr.aria-label="{{item.cardType}} ending in {{item.ccNumber}} " *ngIf="!item.nickName"> {{item.cardType}} ****{{item.ccNumber}}
+                                            <br>
+                                            <span class="styling-6 --medium --dolphin" *ngIf="(item.paymentToken == defaultToken)"> Default payment method</span>
+                                        </td>
+                                            <td attr.aria-label="{{item.firstName}} {{ item.lastName }}">{{item.firstName}}&nbsp;{{ item.lastName }}</td>
+                                            <td attr.aria-label="{{item.expDate}}">{{item.expDate}} </td>
+                                            <td>Edit</td>
+                                            <td>Delete</td>
+                                        </tr>
+                         </tbody>
+                     </table>
+                     <div id="add-new-method" class="payment-history-total">
+                         <div><span>${pmt.NewPaymentMethodText}</span></div>
+                     </div>
+                 </div>
+                 <div aria-live="polite" class="visuallyhidden" id="liveForScreenReaders"></div>
+             </div>
+
+         </div>
+         <div class="pm-payment-method-column">
+         <p class="styling-6 --book --dolphin">${pmt.FormInstruction}</p>
+         </div>
+
+         <div class="form-group" style="clear: left">
+
+               <div>
+                   <label for="payment-type-dropdown" class="styling-8 --book --caps">${pmt.PMTTypeLabel}</label>
+                   
+                   <div class="select-dropdown">
+                       <div>
+                           <i class="icon-chevron-down"></i>
+                       </div>
+				        <sly data-sly-test="${pojoUtil.isAuthoring}">
+				        	<select pqe="payment-type-dropdown" id="payment-type-dropdown" class="select-dropdown styling-6 --book">                                    
+				                   <option  value="${pmt.PaymentTypeCCKey}">${pmt.PMTTypeCCLabel}</option>
+				                   <option  value="${pmt.PaymentTypeCAKey}">${pmt.PMTTypeCALabel}</option>
+				                   <option  value="${pmt.PaymentTypeSAKey}">${pmt.PMTTypeSALabel}</option>
+				           	</select>
+				        </sly>
+	           			<sly data-sly-test="${!pojoUtil.isAuthoring}">
+                            <select pqe="payment-type-dropdown" id="payment-type-dropdown" class="select-dropdown styling-6 --book" [(ngModel)]="model" (ngModelChange)="valueChange($event)">
+	                        	<option *ngFor="let c of modelOptions" [ngValue]="c">{{c.label}}</option>
+	                       	</select>
+                           </sly>
+                   </div>
+               </div>
+
+				<div>
+					<div class="pm-credit-card-form">
+						<div data-sly-test.respath1="${'{0}/{1}' @ format=[currentPage.contentResource.Path,'paymentmethod/pmaddcreditcard']}" data-sly-resource="${respath1 @ removeSelectors }"></div>  
+				    </div>
+				    <div>
+				    	<div data-sly-test.respath2="${'{0}/{1}' @ format=[currentPage.contentResource.Path,'paymentmethod/pmaddach']}" data-sly-resource="${respath2 @ removeSelectors }"></div>  
+					</div>
+				</div>
+
+           </div>
+
+           <div>
+               <div class="pm-payment-method-buttons-column">
+               <button class="button" data-sly-attribute.id="btn_cancel" data-sly-attribute.data-target="" data-sly-attribute.data-url="" data-sly-attribute.data-analytics-click="" data-analytics-type="button" id="btn_cancel">${pmt.ButtonCancelLabel}</button>
+               <button class="button" data-sly-attribute.id="btn_back" data-sly-attribute.data-target="" data-sly-attribute.data-url="" data-sly-attribute.data-analytics-click="" data-analytics-type="button" id="btn_back">${pmt.ButtonBackLabel}</button>
+               <button class="button" data-sly-attribute.id="btn_Next" data-sly-attribute.data-target="" data-sly-attribute.data-url="" data-sly-attribute.data-analytics-click="" data-analytics-type="button" id="btn_Next">${pmt.ButtonNextLabel}</button>
+               </div>
+           </div>
+           
+       </div>
+</div>

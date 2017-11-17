@@ -1,0 +1,11 @@
+<sly data-sly-use.pojoUtil="org.kp.foundation.core.utils.WCMPojoUtil">
+	<sly data-sly-test="${pojoUtil.isAuthoring}">
+		<sly data-sly-include="template-author.html"></sly>
+	</sly>
+	<sly data-sly-test="${!pojoUtil.isAuthoring}">
+		<h1>Payment Method - Edit Account</h1>
+		<pm-account-edit></pm-account-edit>
+	</sly>
+</sly>
+
+

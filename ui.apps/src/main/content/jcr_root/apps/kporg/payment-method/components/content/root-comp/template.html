@@ -1,0 +1,23 @@
+<div class="kp-body-component" data-analytics-location="main area">
+    <div class="pm-row">
+        <sly id="actionarea.html" data-sly-test.respath="${'{0}/{1}' @ format=[currentPage.contentResource.Path,'actionarea']}" data-sly-resource="${respath @ removeSelectors }"/>
+    </div>
+             
+	    <div class="pm-row">
+	    	<div class="pm-step-indicator-column">
+            	<ul class="steps">
+               		<li class="complete">Amount</li>
+                   	<li class="active">Payment</li>
+                   	<li class="final">Review</li>
+               	</ul>
+             </div>
+             <div class="pm-payment-method-column">
+    			<sly id="paymentmethod.html" data-sly-test.respath="${'{0}/{1}' @ format=[currentPage.contentResource.Path,'paymentmethod']}" data-sly-resource="${respath @ removeSelectors }"/>
+    		</div>
+    	</div>
+
+</div>
+
+
+
+     

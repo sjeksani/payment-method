@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Payment Method</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <pm-root-comp>Loading...</pm-root-comp>
+
+    <div id="_templates">
+        <script type="text/ng-template" id="pmrootcomp.html">
+            <div class="kp-body-component" data-analytics-location="main area">
+                <div class="pm-row">
+
+                    <div class="pm action-area-container">
+
+                        <div class="action-area">
+                            <div class="actions-container">
+                                <h1 class="l2-action-area-heading">Pay Bills</h1>
+                                <div></div>
+
+                                <div class="action-buttons">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="pm-row pm-main-content">
+                    <div class="pm-step-indicator-column">
+                        <ul class="steps">
+                            <li class="complete">Amount</li>
+                            <li class="active">Payment</li>
+                            <li class="final">Review</li>
+                        </ul>
+                    </div>
+                    <div class="pm-payment-method-column">
+
+
+
+                        <pm-payment-method *ngIf="(initialModel$ | async)?.ready === true"
+                            [model]="(initialModel$ | async)?.paymentTypeVO"
+                            [modelOptions]="(initialModel$ | async)?.paymentTypeVOOptions"
+                            [modelPaymentMethodList]="(initialModel$ | async)?.paymentMethodList"></pm-payment-method>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </script>
+
+        <script type="text/ng-template" id="paymentmethod.html">
+            <div>
+                <div class="pm-payment-method-column">
+                    <div class="">
+                        <p>Payment method</p>                      
+                        <p pqe="amount-due">Total to be paid:  $9000.00</p>
+                    </div>
+
+                    <!-- Payment Method list -->
+                    <!--<div class="pm-row" data-analytics-location="payment method list" *ngIf="((noHistoryInSelection$ | async)) === false && ((noHistory$ | async)) === false && ((paymentHistoryError$ | async)) === false">-->
+                    <div data-analytics-location="payment method list">
+                        <div id="table-cage" class="pm-payment-method-savedlist"> 
+                            <table aria-readonly="true" class="data-table" role="grid">
+                                <tbody id="container">
+                    
+                                    <tr *ngFor="let item of modelPaymentMethodList.card">
+                                        <td><input type="radio" id="a" name="chkPayment" [value]="item.paymentToken" [checked]="(item.paymentToken == defaultToken)" /></td>
+                                            <td id="a" attr.aria-label="{{item.nickName}}" *ngIf="item.nickName"> {{item.nickName}}
+                                                <br>
+                                                <span class="styling-6 --medium --dolphin" *ngIf="(item.paymentToken == defaultToken)"> Default payment method</span>
+                                            </td>
+                                        <td attr.aria-label="{{item.cardType}} ending in {{item.ccNumber}} " *ngIf="!item.nickName"> {{item.cardType}} ****{{item.ccNumber}}
+                                            <br>
+                                            <span class="styling-6 --medium --dolphin" *ngIf="(item.paymentToken == defaultToken)"> Default payment method</span>
+                                        </td>
+                                            <td attr.aria-label="{{item.firstName}} {{ item.lastName }}">{{item.firstName}}&nbsp;{{ item.lastName }}</td>
+                                            <td attr.aria-label="{{item.expDate}}">{{item.expDate}} </td>
+                                            <td>Edit</td>   
+                                            <td>Delete</td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                            <div id="add-new-method" class="payment-history-total">
+                                <div><span></span></div>
+                            </div>
+                        </div>
+                        <div aria-live="polite" class="visuallyhidden" id="liveForScreenReaders"></div>
+                    </div>
+
+                </div>
+                <div class="pm-payment-method-column">
+                <p class="styling-6 --book --dolphin">Complete your account information below.</p>
+                </div>
+
+                <div class="form-group" style="clear: left">
+
+                    <div>
+                            <label for="payment-type-dropdown" class="styling-8 --book --caps">PAYMENT TYPE</label>
+
+                        <div class="select-dropdown">
+
+                            <div>
+                                <i class="icon-chevron-down"></i>
+                            </div>
+
+                            <select pqe="payment-type-dropdown" id="payment-type-dropdown" class="select-dropdown styling-6 --book" [(ngModel)]="model" (ngModelChange)="valueChange($event)">
+                                        <option *ngFor="let c of modelOptions" [ngValue]="c">{{c.label}}</option>
+                                </select>
+                        </div>
+                    </div>
+
+                    <div>
+                            <!-- <div>
+                                    <pm-payment-method></pm-add-payment-method>
+                                </div> -->
+
+                        <div class="pm-credit-card-form">
+                            <pm-add-credit-card [model]="(initialModel$ | async)?.addCreditCardVO"></pm-add-credit-card>
+                        </div>
+
+                        <div>
+                            <pm-add-ach-account [model]="(initialModel$ | async)?.AddAchAccountVO"></pm-add-ach-account>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="pm-payment-method-buttons-column">
+                    <button class="button" data-analytics-type="button" id="btn_cancel">Cancel</button>
+                    <button class="button" data-analytics-type="button" id="btn_back">Back</button>
+                    <button class="button" data-analytics-type="button" id="btn_Next">Next</button>
+                    </div>
+                </div>
+
+            </div>
+        </script>
+
+        <script type="text/ng-template" id="pmaddach.html">
+
+            <div *ngIf="(appState$ | async)?.paymentType.type === 'CA' || (appState$ | async)?.paymentType.type ==='SA'">
+                <div class="pm-name-column-container">
+                    <div class="pm-payment-method-first-name-column">
+                        <label for="ach-first-name" pqe="firstname-text" class="styling-8 --book --caps">FIRST NAME</label>
+                        <input class="pm-form-input" id="ach-first-name" pqe="firstname-textfield" [attr.type]="'text'" [(ngModel)]="model.firstName" />
+                    </div>
+                    <div class="pm-payment-method-middle-initial-column">
+                        <label for="ach-middle-name" pqe="middlename-text" class="styling-8 --book --caps">MI (OPT.)</label>
+                        <input id="ach-middle-name" class="pm-form-input" pqe="middlename-textfield" [attr.type]="'text'" [(ngModel)]="model.middleName" />
+                    </div>
+                    <div class="pm-payment-method-last-name-column">
+                        <label for="ach-last-name" pqe="lastname-text" class="styling-8 --book --caps">LAST NAME</label>
+                        <input id="ach-last-name" class="pm-form-input" pqe="lastname-textfield" [attr.type]="'text'" [(ngModel)]="model.lastName" />
+                    </div>
+                </div>
+
+
+            <div class="pm-name-column-container">
+                <div class="pm-payment-method-routing-number-column">
+                    <label for="ach-routing-number" pqe="routingnumber-text" class="styling-8 --book --caps"> ROUTING NUMBER
+                    <span aria-describedby="_223456" class="tooltip" data-analytics-location="tooltip">
+                            <a class="tooltip-trigger" data-analytics-type="tooltip" data-tooltip-target="_223456" href="#"><i class="icon-questions"><span class="screenreader-only">Tooltip</span></i></a>
+                    </span> </label>
+                    <input id="ach-routing-number" class="pm-form-input" pqe="routingnumber-textfield" [attr.type]="'text'" [(ngModel)]="model.routingNumber" />
+                </div>
+            </div>
+
+                <div class="pm-name-column-container">
+                    <div class="pm-payment-method-account-number-column">
+                        <label for="ach-account-number" pqe="accountnumber-text" class="styling-8 --book --caps">ACCOUNT NUMBER
+                                <span aria-describedby="_223456" class="tooltip" data-analytics-location="tooltip">
+                                        <a class="tooltip-trigger" data-analytics-type="tooltip" data-tooltip-target="_223456" href="#"><i class="icon-questions"><span class="screenreader-only">Tooltip</span></i></a>
+                                </span>
+                            </label>
+                        <input id="ach-account-number" class="pm-form-input" pqe="accountnumber-textfield" [attr.type]="'text'" [(ngModel)]="model.accountNumber" />
+                    </div>
+                    <div class="pm-payment-method-confirm-account-number-column">
+                        <label for="ach-confirm-account" pqe="accountnumberagain-text" class="styling-8 --book --caps">CONFIRM ACCOUNT NUMBER</label>
+                        <input id="ach-confirm-account" class="pm-form-input" pqe="accountnumberagain-textfield" [attr.type]="'text'" [(ngModel)]="model.confirmAccountnumber" />
+                    </div>
+                </div>
+
+                <div class="pm-payment-method-column">
+                    <p class="styling-6 --book --dolphin">Make future payments fast. Payment information remains encrypted.</p>
+                </div>
+
+                <div class="form-group">
+                    <div class="pm-payment-method-save-method-column">
+                        <input pqe="save-method-checkbox" #saveMethod class="form-control" type="checkbox" id="checkbox_1" [(ngModel)]="model.saveMethod"
+                        />
+                        <label pqe="save-method-text" for="checkbox_1">Save method</label>
+                    </div>
+                    <div data-pqe="ach-set-default" class="pm-payment-method-default-payment-checkbox-column">
+                        <input class="form-control" type="checkbox" id="checkbox_2" />
+                        <label for="checkbox_2">Make this your default payment method</label>
+                    </div>
+                </div>
+                <div class="pm-payment-method-account-nickname-column">
+                        <label for="ach-account-nickname" pqe="nickname-text" class="styling-8 --book --caps">ACCOUNT NICKNAME (OPTIONAL)</label>
+                        <input id="ach-account-nickname" pqe="nickname-textfield" [ngClass]="(!model.saveMethod) ? 'disabled-field':''" [disabled]="!model.saveMethod" #accountNickname
+                            [attr.type]="'text'" [(ngModel)]="model.accountNickname" [style.width]="'250px'" />
+                </div>
+            </div>
+        </script>
+
+        <script type="text/ng-template" id="pmaddcreditcard.html">
+
+            <div *ngIf="(appState$ | async)?.paymentType.type === 'CC'">
+                <div class="pm-name-column-container">
+                    <div data-pqe='ach-Fname' class="pm-payment-method-first-name-column">
+                        <label for="check-first-name" pqe="firstname-text" class="styling-8 --book --caps">FIRST NAME</label>
+                        <input id="check-first-name" class="pm-form-input" pqe="firstname-textfield" [attr.type]="'text'" [(ngModel)]="model.firstName" />
+                    </div>
+                    <div data-pqe='ach-Mname' class="pm-payment-method-middle-initial-column">
+                        <label for="check-middle-name" pqe="middlename-text" class="styling-8 --book --caps">MI (OPT.)</label>
+                        <input id="check-middle-name" class="pm-form-input" pqe="middlename-text" [attr.type]="'text'" [(ngModel)]="model.middleInitial" />
+                    </div>
+                    <div data-pqe='ach-Lname' class="pm-payment-method-last-name-column">
+                        <label for="check-last-name" pqe="lastname-text" class="styling-8 --book --caps">LAST NAME</label>
+                        <input id="check-last-name" class="pm-form-input" pqe="lastname-textfield" [attr.type]="'text'" [(ngModel)]="model.lastName" />
+                    </div>
+                </div>
+
+                <div class="pm-name-column-container">
+                    <div class="pm-payment-method-credit-card-first-column">
+                        <label for="check-card-number" pqe="cardnumber-text" class="styling-8 --book --caps">CARD NUMBER</label>
+                        <input id="check-card-number" class="pm-form-input"  pqe="cardnumber-textfield" [attr.type]="'text'" [(ngModel)]="model.creditCardNumber" />
+                    </div>
+                    <div class="pm-payment-method-credit-card-second-column">
+                        <label for="check-exp-month" pqe="expiration-date-text" class="styling-8 --book --caps">EXPIRATION DATE</label>
+
+                        <div class="select-dropdown">
+                                <div>
+                                        <i class="icon-chevron-down"></i>
+                                </div>
+                            <select id="check-exp-month" class="select-menu" pqe="expiration-month-dropdown" aria-label="expiration-month" [(ngModel)]="model.month" (ngModelChange)="valueChange($event)">
+
+                                      <option value="1">01 January</option>
+                                        <option value="2">02 February</option>
+                                          <option value="3">03 March</option>
+                                      <option value="4">04 April</option>
+                                        <option value="5">05 May</option>
+                                       <option value="6">06 June</option>
+                                       <option value="7">07 July</option>
+                                      <option value="8">08 August</option>
+                                      <option value="9">09 September</option>
+                                        <option value="10">10 October</option>
+                                         <option value="11">11 November</option>
+                                       <option value="12">12 December</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="pm-payment-method-credit-card-third-column">
+                        <label for="check-exp-year" class="styling-8 --book --caps">&nbsp;</label>
+                        <div class="select-dropdown">
+
+                            <div>
+                                <i class="icon-chevron-down"></i>
+                            </div>
+
+                            <select id="check-exp-year" pqe="expiration-year-dropdown" class="select-menu" aria-label="expiration-year" [(ngModel)]="model.year" (ngModelChange)="valueChange($event)">
+                                <option *ngFor="let c of yearOptions" [ngValue]="c">{{c}}</option>
+                             </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pm-payment-method-credit-cardtype-text">
+                    <p class="styling-8 --book --dolphin"> Visa, Mastercard, Discover, Amex </p>
+                </div>
+
+                <div class="pm-payment-method-credit-cardtype-text">
+                    <p class="styling-6 --book --dolphin">Make future payments fast. Payment information remains encrypted.</p>
+                </div>
+                <div>
+                    <div class="pm-payment-method-save-method-column">
+                        <input class="pm-form-group" pqe="save-method-checkbox" #saveMethod class="form-control" type="checkbox" id="checkbox_1" [(ngModel)]="model.saveMethod"/>
+                        <label pqe="save-method-text" for="checkbox_1">Save method</label>
+                        
+                    </div>
+                    <div data-pqe="cc-set-default" class="pm-payment-method-default-payment-checkbox-column">
+                        <input class="form-control" type="checkbox" id="checkbox_2" />
+                        <label for="checkbox_2">Make this your default payment method</label>
+                    </div>
+
+                </div>
+                
+                <div class="pm-payment-method-account-nickname-column">
+                        <label for="check-account-nickname" pqe="nickname-text" class="styling-8 --book --caps">ACCOUNT NICKNAME (OPTIONAL)</label>
+                        <input id="check-account-nickname" pqe="nickname-textfield" [ngClass]="(!model.saveMethod) ? 'disabled-field':''" [disabled]="!model.saveMethod" #accountNickname
+                            [attr.type]="'text'" [(ngModel)]="model.accountNickname" [style.width]="'250px'" />
+                </div>
+            
+            </div>
+        </script>
+
+        <script type="text/ng-template" id="pm_edit_account.html">
+
+            <div>
+                <h1> Edit Account Details</h1>
+                <div class="pm-payment-method-first-name-column">
+                    <p>FIRST NAME</p>
+                    <input [attr.type]="'text'" [attr.value]="'A'" [style.width]="'250px'" />
+                </div>
+                <div class="pm-payment-method-middle-initial-column">
+                    <p>MI (OPT.)</p>
+                    <input [attr.type]="'text'" [attr.value]="'B'" [style.width]="'75px'" />
+                </div>
+                <div class="pm-payment-method-last-name-column">
+                    <p>LAST NAME</p>
+                    <input [attr.type]="'text'" [attr.value]="'C'" [style.width]="'250px'" />
+                </div>
+            </div>
+        </script>
+
+        <script type="text/ng-template" id="pm_delete_account.html">
+
+            <div>
+                <h1> Delete Account Details</h1>
+            </div>
+        </script>
+    </div>
+</body>

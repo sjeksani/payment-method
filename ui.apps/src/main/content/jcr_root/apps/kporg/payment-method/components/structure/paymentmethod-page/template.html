@@ -1,0 +1,6 @@
+<sly data-sly-use.angHandler="org.kp.web.coveragecosts.models.AngularTemplateHandlerUse">
+	<sly data-sly-list="${angHandler.AngularComps}">
+    <script type="text/ng-template" id="${item.TemplateID}.html" data-sly-resource="${item.TemplatePath @ selectors='template'}">
+    </script>
+    </sly> 
+</sly>

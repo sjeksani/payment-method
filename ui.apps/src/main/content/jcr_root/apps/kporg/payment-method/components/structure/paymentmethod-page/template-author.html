@@ -1,0 +1,25 @@
+<div class="kp-body-component" data-analytics-location="main area">
+    <div class="pm-row">
+        <div id="actionarea.html" data-sly-test.respath="${'{0}/{1}' @ format=[currentPage.contentResource.Path,'actionarea']}" data-sly-resource="${respath @ removeSelectors }"></div>
+    </div>
+   	<div class="pm-row"> 
+   		<div class="pm-step-indicator-column">
+        	<ul class="steps">
+            	<li class="complete">Amount</li>
+                <li class="active">Payment</li>
+                <li class="final">Review</li>
+            </ul>
+        </div>  	         
+	    <div class="pm-payment-method-column">	
+			<div data-sly-resource="${'paymentmethod' @resourceType='kporg/payment-method/components/content/payment-method'}"></div>			
+	   	</div>   	
+	</div> 
+	
+	<div class="pm-row">
+		<div data-sly-resource="${'pmmodal_edit' @resourceType='kporg/kp-foundation/components/content/generic-modal'}"></div>					
+	</div>
+
+	<div class="pm-row">
+		<div data-sly-resource="${'pmmodal_delete' @resourceType='kporg/kp-foundation/components/content/generic-modal'}"></div>					
+	</div>
+</div>

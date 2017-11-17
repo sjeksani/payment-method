@@ -1,0 +1,93 @@
+<sly data-sly-use.cc="org.kp.web.paymentmethod.use.AccountCCViewUse" data-sly-use.pojoUtil="org.kp.foundation.core.utils.WCMPojoUtil" >
+        <div data-sly-test.author="${wcmmode.edit || wcmmode.design}">Edit the Payment Method - Credit Card View Component</div>
+	     <div *ngIf="(appState$ | async)?.paymentType.type === 'CC'">
+	         <div class="pm-name-column-container">
+	             <div class="pm-payment-method-first-name-column">
+	                 <label for="check-first-name" pqe="firstname-text" class="styling-8 --book --caps">${cc.FNameLabel}</label>
+	                 <input id="check-first-name" class="pm-form-input" pqe="firstname-textfield" [attr.type]="'text'" [(ngModel)]="model.firstName" />
+	             </div>
+	             <div class="pm-payment-method-middle-initial-column">
+	                 <label for="check-middle-name" pqe="middlename-text" class="styling-8 --book --caps">${cc.MINameLabel}</label>
+	                 <input id="check-middle-name" class="pm-form-input" pqe="middlename-text" [attr.type]="'text'" [(ngModel)]="model.middleInitial" />
+	             </div>
+	             <div class="pm-payment-method-last-name-column">
+	                 <label for="check-last-name" pqe="lastname-text" class="styling-8 --book --caps">${cc.LNameLabel}</label>
+	                 <input id="check-last-name" class="pm-form-input" pqe="lastname-textfield" [attr.type]="'text'" [(ngModel)]="model.lastName" />
+	             </div>
+	         </div>
+	
+	         <div class="pm-name-column-container">
+	             <div class="pm-payment-method-credit-card-first-column">
+	                 <label for="check-card-number" pqe="cardnumber-text" class="styling-8 --book --caps">${cc.CardNumberLabel}</label>
+	                 <input id="check-card-number" class="pm-form-input"  pqe="cardnumber-textfield" [attr.type]="'text'" [(ngModel)]="model.creditCardNumber" />
+	             </div>
+	             <div class="pm-payment-method-credit-card-second-column">
+	                 <label for="check-exp-month" pqe="expiration-date-text" class="styling-8 --book --caps">${cc.ExpirationDateLabel}&nbsp;</label>
+	
+	                 <div class="select-dropdown">
+                         <div>
+                         	<i class="icon-chevron-down"></i>
+                         </div>
+	                     <select id="check-exp-month" class="select-menu" pqe="expiration-month-dropdown" aria-label="expiration-month" [(ngModel)]="model.month" (ngModelChange)="valueChange($event)">
+								<option value="0">${cc.MonthLabel}</option>
+	                         	<option value="1">01 January</option>
+	                           	<option value="2">02 February</option>
+	                            <option value="3">03 March</option>
+	                            <option value="4">04 April</option>
+	                           	<option value="5">05 May</option>
+	                   			<option value="6">06 June</option>
+	           					<option value="7">07 July</option>
+	            				<option value="8">08 August</option>
+	              				<option value="9">09 September</option>
+	                 			<option value="10">10 October</option>
+	                 			<option value="11">11 November</option>
+	             				<option value="12">12 December</option>
+	                     </select>
+	                 </div>
+	             </div>
+	
+	             <div class="pm-payment-method-credit-card-third-column">
+	                 <label for="check-exp-year" class="styling-8 --book --caps">&nbsp;</label>
+	                 <div class="select-dropdown">	
+	               	    <div>
+	                    	<i class="icon-chevron-down"></i>
+	                    </div>
+						<select id="check-exp-year" data-sly-test="${pojoUtil.isAuthoring}" pqe="expiration-year-dropdown" class="select-menu" aria-label="expiration-year" >
+	               			<option value="0">${cc.YearLabel}</option>
+	               			<option *ngFor="let c of yearOptions" [ngValue]="c">{{c}}</option>
+	            		</select>
+	            		<select id="check-exp-year" data-sly-test="${!pojoUtil.isAuthoring}" pqe="expiration-year-dropdown" class="select-menu" aria-label="expiration-year" [(ngModel)]="model.year" (ngModelChange)="valueChange($event)">
+	              			<option value="0">${cc.YearLabel}</option>
+	              			<option *ngFor="let c of yearOptions" [ngValue]="c">{{c}}</option>
+	                    </select>
+	                 </div>
+	             </div>
+	         </div>
+	
+	         <div class="pm-payment-method-credit-cardtype-text">
+	             <p class="styling-8 --book --dolphin">${cc.CardTypesLabel}</p>
+	         </div>
+	
+	         <div class="pm-payment-method-credit-cardtype-text">
+	             <p class="styling-6 --book --dolphin">${cc.DefaultPaymentText}</p>
+	         </div>
+	         <div>
+	             <div class="pm-payment-method-save-method-column">
+	                 <input class="pm-form-group" pqe="save-method-checkbox" #saveMethod class="form-control" type="checkbox" id="checkbox_1" [(ngModel)]="model.saveMethod"
+	                 />
+	                 <label pqe="save-method-text" for="checkbox_1">${cc.SaveMethodLabel}</label>
+	                 
+	             </div>
+	             <div class="pm-payment-method-default-payment-checkbox-column">
+	                 <input class="form-control" type="checkbox" id="checkbox_2" />
+	                 <label for="checkbox_2">${cc.DefaultPaymentMethodLabel}</label>
+	             </div>
+	
+	         </div>
+	         <div class="pm-payment-method-account-nickname-column">
+	                 <label for="check-account-nickname" pqe="nickname-text" class="styling-8 --book --caps">${cc.PaymentMethodNickNameLabel}</label>
+	                 <input id="check-account-nickname" pqe="nickname-textfield" [ngClass]="(!model.saveMethod) ? 'disabled-field':''" [disabled]="!model.saveMethod" #accountNickname
+	                     [attr.type]="'text'" [(ngModel)]="model.accountNickname" [style.width]="'250px'" />
+	         </div>
+	     </div>
+    </sly>

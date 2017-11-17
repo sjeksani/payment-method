@@ -1,0 +1,13 @@
+<div *ngIf="(appState$ | async)?.allOk === false">
+	<div class="payment-method-error-message">
+		<div class="payment-method-notification {{getErrorType((appState$ | async).errorCode)}}">
+			<div class="-main">
+				<div class="-icon" aria-hidden="true"></div>
+				<span class="screenreader-only" role="alert">action incomplete icon</span>
+				<div class="-body" [attr.data-pq]="(getErrorMessage() | async)?.getCode()" [innerHtml]="(getErrorMessage() | async)?.getMessage()">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

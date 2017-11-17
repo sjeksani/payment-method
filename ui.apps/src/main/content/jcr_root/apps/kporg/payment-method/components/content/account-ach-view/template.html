@@ -1,0 +1,65 @@
+<sly data-sly-use.ach="org.kp.web.paymentmethod.use.AccountACHViewUse" >
+	<div data-sly-test.author="${wcmmode.edit || wcmmode.design}">Edit the Payment Method - ACH Account View Component</div>			
+    <div *ngIf="(appState$ | async)?.paymentType.type === 'CA' || (appState$ | async)?.paymentType.type ==='SA'">
+        <div class="pm-name-column-container">
+            <div class="pm-payment-method-first-name-column">
+                <label for="ach-first-name" pqe="firstname-text" class="styling-8 --book --caps">${ach.FNameLabel}</label>
+                <input id="ach-first-name" class="pm-form-input" pqe="firstname-textfield" [attr.type]="'text'" [(ngModel)]="model.firstName" />
+            </div>
+            <div class="pm-payment-method-middle-initial-column">
+                <label for="ach-middle-name" pqe="middlename-text" class="styling-8 --book --caps">${ach.MINameLabel}</label>
+                <input id="ach-middle-name" class="pm-form-input" pqe="middlename-textfield" [attr.type]="'text'" [(ngModel)]="model.middleName" />
+            </div>
+            <div class="pm-payment-method-last-name-column">
+                <label for="ach-last-name" pqe="lastname-text" class="styling-8 --book --caps">${ach.LNameLabel}</label>
+                <input id="ach-last-name" class="pm-form-input" pqe="lastname-textfield" [attr.type]="'text'" [(ngModel)]="model.lastName" />
+            </div>
+        </div>
+
+
+        <div class="pm-payment-method-routing-number-column">
+            <label for="ach-routing-number" pqe="routingnumber-text" class="styling-8 --book --caps">${ach.RoutingNumberLabel}
+                    <span aria-describedby="_223456" class="tooltip" data-analytics-location="tooltip">
+                            <a class="tooltip-trigger" data-analytics-type="tooltip" data-tooltip-target="_223456" href="#"><i class="icon-questions"><span class="screenreader-only">Tooltip</span></i></a>
+                    </span>
+            </label>
+            <input id="ach-routing-number" class="pm-form-input" pqe="routingnumber-textfield" [attr.type]="'text'" [(ngModel)]="model.routingNumber" />
+        </div>
+
+        <div class="pm-name-column-container">
+            <div class="pm-payment-method-account-number-column">
+                <label for="ach-account-number" pqe="accountnumber-text" class="styling-8 --book --caps">${ach.AccountNumberLabel}
+                        <span aria-describedby="_223456" class="tooltip" data-analytics-location="tooltip">
+                                <a class="tooltip-trigger" data-analytics-type="tooltip" data-tooltip-target="_223456" href="#"><i class="icon-questions"><span class="screenreader-only">Tooltip</span></i></a>
+                        </span>
+                </label>
+                <input id="ach-account-number" class="pm-form-input" pqe="accountnumber-textfield" [attr.type]="'text'" [(ngModel)]="model.accountNumber" />
+            </div>
+            <div class="pm-payment-method-confirm-account-number-column">
+                <label for="ach-confirm-account" pqe="accountnumberagain-text" class="styling-8 --book --caps">${ach.ConfirmAccountNumberLabel}</label>
+                <input id="ach-confirm-account" class="pm-form-input" pqe="accountnumberagain-textfield" [attr.type]="'text'" [(ngModel)]="model.confirmAccountnumber" />
+            </div>
+        </div>
+
+        <div class="pm-payment-method-column">
+            <p class="styling-6 --book --dolphin">${ach.DefaultPaymentText}</p>
+        </div>
+
+        <div class="form-group">
+            <div class="pm-payment-method-save-method-column">
+                <input pqe="save-method-checkbox" #saveMethod class="form-control" type="checkbox" id="checkbox_1" [(ngModel)]="model.saveMethod"
+                />
+                <label pqe="save-method-text" for="checkbox_1">${ach.SaveMethodLabel}</label>
+            </div>
+            <div class="pm-payment-method-default-payment-checkbox-column">
+                <input pge="default-payment-checkbox" class="form-control" type="checkbox" id="checkbox_2" />
+                <label pge="default-payment-text" for="checkbox_2">${ach.DefaultPaymentMethodLabel}</label>
+            </div>
+        </div>
+        <div class="pm-payment-method-account-nickname-column">
+                <label for="ach-account-nickname" pqe="nickname-text" class="styling-8 --book --caps">${ach.PaymentMethodNickNameLabel}</label>
+                <input id="ach-account-nickname" pqe="nickname-textfield" [ngClass]="(!model.saveMethod) ? 'disabled-field':''" [disabled]="!model.saveMethod" #accountNickname
+                    [attr.type]="'text'" [(ngModel)]="model.accountNickname" [style.width]="'250px'" />
+        </div>
+    </div>
+</sly>

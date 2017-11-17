@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+    <filter root="/apps/kporg/payment-method">
+        <exclude pattern="/apps/kporg/payment-method/install" />
+    </filter>
+    <filter root="/etc/designs/kporg/payment-method"/>
+</workspaceFilter>

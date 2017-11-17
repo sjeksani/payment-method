@@ -1,0 +1,9 @@
+<sly data-sly-use.pojoUtil="org.kp.foundation.core.utils.WCMPojoUtil">
+	<sly data-sly-test="${pojoUtil.isAuthoring}">
+		<div>Error Message Component Placeholder</div>  
+		<sly data-sly-include="template.html"></sly>
+	</sly>
+	<sly data-sly-test="${!pojoUtil.isAuthoring}">
+		<pm-error-message template-url="${resource.Name}.html"></pm-error-message>
+	</sly>
+</sly>
